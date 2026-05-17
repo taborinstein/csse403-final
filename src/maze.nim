@@ -20,6 +20,7 @@ when isMainModule:
     game.windowSize = (GameWidth * 2, GameHeight * 2) # Double scaling (1280x720)
     game.centrify() # Place window at the center of the screen
 
+    loadData()
     # Create scenes
     var titleScene = newTitleScene()
     var mainScene = newMainScene()
