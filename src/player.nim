@@ -26,8 +26,8 @@ proc newPlayer*(): Player =
 method update*(player: Player, elapsed: float) = 
   var movement = Speed * elapsed
 
-  if ScancodeW.down: player.pos.y += movement
-  if ScancodeS.down: player.pos.y -= movement
+  if ScancodeW.down: player.pos.y -= movement
+  if ScancodeS.down: player.pos.y += movement
   if ScancodeA.down: player.pos.x -= movement
   if ScancodeD.down: player.pos.x += movement
 

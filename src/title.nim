@@ -3,17 +3,17 @@ import
     nimgame,
     entity,
     scene,
-    font,
-    truetypefont,
     textgraphic,
     types
   ],
   data
 
 type
-  TitleScene = ref object of Scene
+  TitleScene* = ref object of Scene
 
 proc init*(scene: TitleScene) =
+  init Scene(scene)
+
   # Create a title text graphic with a big font
   let titleText = newTextGraphic(bigFont)
   titleText.setText(GameTitle) # Set the text to render
@@ -35,9 +35,10 @@ proc init*(scene: TitleScene) =
   scene.add subtitle # Add subtitle entity to the scene
 
 proc newTitleScene*(): TitleScene =
-  new(result)
+  new result
   init result
 
 method event*(scene: TitleScene, event: Event) =
   if event.kind == KeyDown:
+    echo "key down"
     game.scene = mainScene

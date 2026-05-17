@@ -7,7 +7,7 @@ import
   ],
   data,
   title,
-  mainScene
+  main
 
 when isMainModule:
   game = newGame()
@@ -20,9 +20,10 @@ when isMainModule:
     game.centrify() # Place window at the center of the screen
 
     loadData()
+
     # Create scenes
-    var titleScene = newTitleScene()
-    var mainScene = newMainScene()
+    titleScene = newTitleScene()
+    mainScene = newMainScene()
     
     # Run
     game.scene = titleScene # Initial scene

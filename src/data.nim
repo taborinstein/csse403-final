@@ -2,7 +2,6 @@ import
   nimgame2 / [
     assets,
     scene,
-    font,
     truetypefont,
     types,
     texturegraphic,
@@ -13,12 +12,11 @@ const
   GameHeight* = 360
   GameTitle* = "Maze Game"
 
-
 var
   titleScene*, mainScene*: Scene
   defaultFont*, bigFont*: TrueTypeFont
   gfxData*: Assets[TextureGraphic]
-  
+
 proc loadData*() =
   defaultFont = newTrueTypeFont()
   if not defaultFont.load("data/fnt/FSEX302.ttf", 16):
