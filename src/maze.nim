@@ -1,5 +1,4 @@
 # AUTHORS: Taylor Borinstein, Kyra Zhou, Mason Rice
-
 import
   nimgame2 / [
     nimgame,
@@ -8,7 +7,7 @@ import
   ],
   data,
   title,
-  mainscene
+  mainScene
 
 when isMainModule:
   game = newGame()
@@ -24,7 +23,7 @@ when isMainModule:
     # Create scenes
     var titleScene = newTitleScene()
     var mainScene = newMainScene()
-
+    
     # Run
     game.scene = titleScene # Initial scene
     run game  # Let's go!

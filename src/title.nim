@@ -13,21 +13,6 @@ import
 type
   TitleScene = ref object of Scene
 
-var
-  defaultFont*, bigFont*: TrueTypeFont
-
-proc loadData*() =
-  defaultFont = newTrueTypeFont()
-  if not defaultFont.load("data/fnt/FSEX302.ttf", 16):
-    echo "ERROR: Can't load default font"
-  bigFont = newTrueTypeFont()
-  if not bigFont.load("data/fnt/FSEX302.ttf", 32):
-    echo "ERROR: Can't load big font"
-
-proc freeData*() =
-  defaultFont.free()
-  bigFont.free()
-
 proc init*(scene: TitleScene) =
   # Create a title text graphic with a big font
   let titleText = newTextGraphic(bigFont)
@@ -49,11 +34,8 @@ proc init*(scene: TitleScene) =
   subtitle.pos = game.size / 2 # Place to the center of the screen
   scene.add subtitle # Add subtitle entity to the scene
 
-  # init Scene(scene)
-
 proc newTitleScene*(): TitleScene =
   new(result)
-  # new(free)
   init result
 
 method event*(scene: TitleScene, event: Event) =
