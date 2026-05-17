@@ -10,4 +10,4 @@ bin           = @["maze"]
 
 # Dependencies
 
-requires "nim >= 2.2.8"
+requires "nim >= 2.2.8", "nimgame2 >= 0.6.1"

@@ -1,5 +1,29 @@
-# This is just an example to get you started. A typical binary package
-# uses this file as the main entry point of the application.
+# AUTHORS: Taylor Borinstein, Kyra Zhou, Mason Rice
+
+import
+  nimgame2 / [
+    nimgame,
+    settings,
+    types,
+  ],
+  data,
+  title,
+  mainscene
 
 when isMainModule:
-  echo("Hello, World!")
+  game = newGame()
+  if game.init(GameWidth, GameHeight, title = GameTitle, integerScale = true):
+
+    # Init
+    game.setResizable(true) # Window could be resized
+    game.minSize = (GameWidth, GameHeight) # Minimal window size
+    game.windowSize = (GameWidth * 2, GameHeight * 2) # Double scaling (1280x720)
+    game.centrify() # Place window at the center of the screen
+
+    # Create scenes
+    var titleScene = newTitleScene()
+    var mainScene = newMainScene()
+
+    # Run
+    game.scene = titleScene # Initial scene
+    run game  # Let's go!
