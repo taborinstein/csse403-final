@@ -1,6 +1,6 @@
 maze
-maze.exe
-config.nims
+mazegame.exe
 nimble.develop
 nimble.paths
 nimbledeps
+config.nims
