@@ -7,17 +7,23 @@ import
     entity,
   ],
   data
- 
+
 const
   Speed = 250.0 # pixels per second
 
 type
   Player* = ref object of Entity
+    radius: float
 
 proc init*(player: Player) = 
   player.initEntity()
   player.graphic = gfxData["player"]
+  player.radius = player.graphic.dim.w / 2
   player.centrify()
+
+  player.tags.add("player")
+  player.collider = player.newCircleCollider((0, 0), player.radius)
+  player.collider.tags.add("player")
 
 proc newPlayer*(): Player =
   new result
