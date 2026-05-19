@@ -6,40 +6,51 @@ import
     draw,
     types,
     entity,
+    nimgame
   ],
   data,
   player,
   test_wall
+import levels, maze_creation
 
+# type
+#     Level = tilemap: ref object of TileMap
 type
   MainScene* = ref object of Scene
     player: Player
-    tiles: array[18, array[32, Entity]] # might have to switch dimensions
+    level: Level
+    maze: MazeSpec
 
 proc init*(scene: MainScene) =
-  init Scene(scene)
-  
-  scene.player = newPlayer()
-  scene.player.pos = (GameWidth / 2, GameHeight / 2)
-  scene.add(scene.player)
+    init Scene(scene)
+    # scene.level = levels.levels[0]
+    scene.player = newPlayer()
+    scene.player.pos = (GameWidth / 2, GameHeight / 2)
+    scene.add(scene.player)
 
-  for i in 0..17:
-    scene.tiles[i][0] = newTestWall((i * 40, 0))
-  
-  for row in scene.tiles:
-    for e in row:
-      if e != nil:
-        scene.add(e)
-
+    scene.camera = newEntity()
+    scene.player.parent = scene.camera
+    scene.cameraBond = scene.player
+    scene.cameraBondOffset = game.size / 2
+    scene.level = newLevel(gfxData["test_rect"])
+    scene.level.layer = 0
+    scene.level.parent = scene.camera
+    scene.level.load
+    scene.player.collisionEnvironment = @[Entity(scene.level)]
+    scene.player.layer = 10
+    scene.add scene.level
+    scene.player.pos = levels.levels[0].start * (128.0, 128.0) + (64.0, 64.0)
+    
+    
 proc newMainScene*(): MainScene =
-  new result
-  init result
+    new result
+    init result
 
 method show*(scene: MainScene) =
-  echo "Switched to MainScene"
+    echo "Switched to MainScene"
 
 method update*(scene: MainScene, elapsed: float) =
-  scene.updateScene(elapsed)
+    scene.updateScene(elapsed)
 
-  if ScancodeF1.pressed: colliderOutline = not colliderOutline
-  if ScancodeF2.pressed: showInfo = not showInfo
+    if ScancodeF1.pressed: colliderOutline = not colliderOutline
+    if ScancodeF2.pressed: showInfo = not showInfo

@@ -12,7 +12,6 @@ import
 when isMainModule:
   game = newGame()
   if game.init(GameWidth, GameHeight, title = GameTitle, integerScale = true):
-
     # Init
     game.setResizable(true) # Window could be resized
     game.minSize = (GameWidth, GameHeight) # Minimal window size

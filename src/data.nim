@@ -8,8 +8,8 @@ import
   ]
 
 const
-  GameWidth* = 640
-  GameHeight* = 360
+  GameWidth* = 800
+  GameHeight* = 800
   GameTitle* = "Maze Game"
 
 var

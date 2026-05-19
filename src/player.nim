@@ -1,49 +1,51 @@
 import
-  nimgame2 / [
-    assets,
-    graphic,
-    input,
-    nimgame,
-    entity,
-  ],
-  data
+    nimgame2 / [
+        assets,
+        graphic,
+        input,
+        nimgame,
+        entity
+    ],
+    data
 
 const
-  Speed = 250.0 # pixels per second
+    Speed = 750.0 # pixels per second
 
 type
-  Player* = ref object of Entity
-    radius: float
+    Player* = ref object of Entity
+        radius: float
 
 proc init*(player: Player) = 
-  player.initEntity()
-  player.graphic = gfxData["player"]
-  player.radius = player.graphic.dim.w / 2
-  player.centrify()
-
-  player.tags.add("player")
-  player.collider = player.newCircleCollider((0, 0), player.radius)
-  player.collider.tags.add("player")
+    player.initEntity()
+    player.graphic = gfxData["player"]
+    player.radius = player.graphic.dim.w / 2
+    player.centrify()
+    player.collider = player.newCircleCollider((0.0,0.0), player.radius) 
+    
+    player.tags.add("player")
+#     player.collider.tags.add("player")
+    player.physics = platformerPhysics
+#     player.acc.y = 1000
 
 proc newPlayer*(): Player =
-  new result
-  init result
+    new result
+    init result
 
 method update*(player: Player, elapsed: float) = 
-  var movement = Speed * elapsed
+    player.updateEntity(elapsed)
+    if ScancodeUp.down or ScanCodeW.down: 
+        player.vel.y = -Speed
+    elif ScancodeDown.down or ScancodeS.down: 
+        player.vel.y = Speed
+    else:
+        player.vel.y = 0
+    if ScancodeLeft.down or ScancodeA.down: 
+        player.vel.x = -Speed
+    elif ScancodeRight.down or ScanCodeD.down: 
+        player.vel.x = Speed
+    else:
+        player.vel.x = 0
 
-  if ScancodeW.down: player.pos.y -= movement
-  if ScancodeS.down: player.pos.y += movement
-  if ScancodeA.down: player.pos.x -= movement
-  if ScancodeD.down: player.pos.x += movement
-
-  player.pos.x = clamp(
-    player.pos.x,
-    player.center.x,
-    game.size.w.float - player.center.x
-  )
-  player.pos.y = clamp(
-    player.pos.y,
-    player.center.y,
-    game.size.h.float - player.center.x
-  )
+method onCollide*(player: Player, target: Entity) =
+    # do key/door collision
+    discard

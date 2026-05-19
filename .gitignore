@@ -4,3 +4,4 @@ nimble.develop
 nimble.paths
 nimbledeps
 config.nims
+index.*
