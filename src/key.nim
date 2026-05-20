@@ -17,9 +17,7 @@ type
 
 proc init*(key: Key) = 
     key.initEntity()
-    echo "hiiii"
     key.graphic = gfxData["key"]
-    echo "hiiii 2"
     key.radius = key.graphic.dim.w / 2
     key.centrify()
     key.collider = key.newCircleCollider((0.0,0.0), key.radius) 

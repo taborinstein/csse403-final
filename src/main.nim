@@ -68,7 +68,12 @@ proc init*(scene: MainScene) =
         door.pos = d * (128.0, 128.0) + (64.0, 64.0)
         door.parent = scene.camera
         scene.player.collisionEnvironment.add door
-        
+        door.sensor.can_unlock = proc(): bool = 
+            if scene.num_keys_has > 0:
+                scene.num_keys_has -= 1
+                ui.setText &" Keys: {scene.num_keys_has}"
+                return true
+            return false
         scene.add door.sensor
         scene.add door
         
