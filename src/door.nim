@@ -3,12 +3,10 @@ import
         assets,
         graphic,
         input,
-        nimgame,
         entity,
         types
     ],
-    data,
-    main
+    data
 
 type
     DoorSensor* = ref object of Entity

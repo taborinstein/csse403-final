@@ -6,7 +6,8 @@ import
         nimgame,
         entity
     ],
-    data
+    data,
+    player
 
 # const
 #     Speed = 750.0 # pixels per second
@@ -14,10 +15,10 @@ import
 type
     Enemy* = ref object of Entity
         radius: float
-	speed: float
-	updateSelf*: proc (enemy: Enemy, elapsed: float)
+        speed: float
+        updateSelf*: proc (enemy: Enemy, elapsed: float)
 
-proc init*(enemy: Enemy, speed, graphicName: string) = 
+proc init*(enemy: Enemy, speed: float, graphicName: string) = 
     enemy.initEntity()
     enemy.speed = speed
     enemy.graphic = gfxData[graphicName]
@@ -35,10 +36,10 @@ proc newEnemy1*(): Enemy =
 
 method update*(enemy: Enemy, elapsed: float) = 
     enemy.updateEntity(elapsed)
-    enemy.updateSelf(elapsed)
+    enemy.updateSelf(enemy, elapsed)
     
 
-method onCollide*(player: Player, target: Entity) =
+method onCollide*(enemy: Enemy, target: Entity) =
     # collision with player  
     if "player" in target.tags:
-	player.handleCollideWithEnemy()
+        Player(target).handleCollideWithEnemy()

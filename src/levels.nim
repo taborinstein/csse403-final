@@ -1,13 +1,9 @@
 import
-    parseutils,
     nimgame2 / [
-    assets,
     entity,
     texturegraphic,
     tilemap,
-    utils,
-    ],
-    data
+    ]
 import maze_creation
 import level_data/level_1
 

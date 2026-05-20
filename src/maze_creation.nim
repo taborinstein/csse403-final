@@ -15,7 +15,9 @@ type
 macro define_maze*(body: untyped): untyped =
     var walls: seq[Coord] = @[]
     var keys: seq[Coord] = @[]
+    var key_nodes: seq[NimNode] = @[]
     var doors: seq[Coord] = @[]
+    var door_nodes: seq[NimNode] = @[]
     var w = 0
     var h = body.len
     var goal: Coord = (x: 0, y: 0)
@@ -34,8 +36,10 @@ macro define_maze*(body: untyped): untyped =
                     walls.add(pos)
                 of "K":
                     keys.add(pos)
+                    key_nodes.add node
                 of "D":
                     doors.add(pos)
+                    door_nodes.add node
                 of "X":
                     goal = pos
                 of "S":
@@ -59,6 +63,10 @@ macro define_maze*(body: untyped): untyped =
                     error(&"No idea how you got here; got node type {$node.kind}")
         iter(list) 
     w += 1
+    if keys.len > doors.len:
+        warning("More keys than doors", key_nodes[key_nodes.high])
+    if doors.len > keys.len:
+        error("More doors than keys", door_nodes[door_nodes.high])
     result = quote do:
         MazeSpec(
             walls: `walls`, 

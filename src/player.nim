@@ -3,7 +3,6 @@ import
         assets,
         graphic,
         input,
-        nimgame,
         entity
     ],
     data
@@ -51,4 +50,4 @@ method onCollide*(player: Player, target: Entity) =
     discard
 
 method handleCollideWithEnemy*(player: Player) = 
-    
+    discard

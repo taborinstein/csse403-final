@@ -2,13 +2,11 @@ import
   nimgame2 / [
     input,
     scene,
-    settings,
     types,
     entity,
     nimgame,
-    texturegraphic,
-    textgraphic,
-    draw
+    settings,
+    textgraphic
   ],
   data,
   player
@@ -54,13 +52,12 @@ proc init*(scene: MainScene) =
     let title = newEntity()
     title.layer = 100
     title.graphic = ui
-    echo scene.maze
-    for key in scene.maze.keys:
-        let k = newKey()
-        k.pos = key * (128.0, 128.0) + (64.0, 64.0)
-        scene.keys.add k
-        k.layer = 9
-        k.on_collect = proc() =
+    for k in scene.maze.keys:
+        let key = newKey()
+        key.pos = k * (128.0, 128.0) + (64.0, 64.0)
+        scene.keys.add key
+        key.layer = 9
+        key.on_collect = proc() =
             scene.num_keys_has += 1
             ui.setText &" Keys: {scene.num_keys_has}"
     for key in scene.keys:
@@ -80,9 +77,6 @@ proc init*(scene: MainScene) =
             return false
         scene.add door.sensor
         scene.add door
-        
-
-    
     scene.add title
     
     

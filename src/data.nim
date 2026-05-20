@@ -3,8 +3,7 @@ import
     assets,
     scene,
     truetypefont,
-    types,
-    texturegraphic,
+    texturegraphic
   ]
 
 const
