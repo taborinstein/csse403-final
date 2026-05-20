@@ -3,14 +3,14 @@ import
     input,
     scene,
     settings,
-    draw,
     types,
     entity,
-    nimgame
+    nimgame,
+    textgraphic,
+    draw
   ],
   data,
-  player,
-  test_wall
+  player
 import levels, maze_creation
 
 # type
@@ -40,6 +40,14 @@ proc init*(scene: MainScene) =
     scene.player.layer = 10
     scene.add scene.level
     scene.player.pos = levels.levels[0].start * (128.0, 128.0) + (64.0, 64.0)
+    
+    let ui = newTextGraphic(bigFont)
+    ui.setText "Keys: 0"
+    
+    let title = newEntity()
+    title.graphic = ui
+    discard box((0, 0), (20, 20), ColorBlack)
+    scene.add title
     
     
 proc newMainScene*(): MainScene =
