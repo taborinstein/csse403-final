@@ -6,9 +6,11 @@ import
     ]
 import maze_creation
 import level_data/level_1
+import level_data/level_2
 
 let levels* = [
-    level_1.level_1
+    level_1.level_1,
+    level_2.level_2
 ]
 
 
@@ -33,8 +35,7 @@ proc newLevel*(tiles: TextureGraphic): Level =
     result.init(tiles)
 
 
-proc load*(level: Level) =
-    let maze = levels[0]
+proc load*(level: Level, maze: MazeSpec) =
     level.map = @[]#@[@[0],@[0],@[1]]
     for i in 0..<maze.height:
         level.map.add newSeq[int](maze.width)
@@ -44,6 +45,6 @@ proc load*(level: Level) =
     # for door in maze.doors:
     #     level.map[door.y.toInt][door.x.toInt] = 2
     level.hidden.add @[0]  # tiles on the third row are invisible markers
-    level.passable.add @[0] # tiles without colliders
+    level.passable.add @[0,1] # tiles without colliders
     level.onlyReachableColliders = true # do not init unreachable colliders
     level.initCollider()

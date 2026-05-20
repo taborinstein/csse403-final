@@ -10,7 +10,7 @@ import
   ],
   data,
   player
-import levels, maze_creation, key, door, enemy
+import levels, maze_creation, key, door, enemy, goal
 import std/strformat
 
 # type
@@ -20,13 +20,14 @@ type
     player: Player
     level: Level
     maze: MazeSpec
+    maze_index: int
     keys: seq[Key]
     num_keys_has: int
     player_lives: int
 
 proc init*(scene: MainScene) =
     init Scene(scene)
-    scene.maze = levels.levels[0]
+    scene.maze = levels.levels[scene.maze_index]
     scene.player = newPlayer()
     scene.add(scene.player)
 
@@ -37,11 +38,11 @@ proc init*(scene: MainScene) =
     scene.level = newLevel(gfxData["test_rect"])
     scene.level.layer = 0
     scene.level.parent = scene.camera
-    scene.level.load
+    scene.level.load(scene.maze)
     scene.player.collisionEnvironment = @[Entity(scene.level)]
     scene.player.layer = 10
     scene.add scene.level
-    scene.player.pos = levels.levels[0].start * (128.0, 128.0) + (64.0, 64.0)
+    scene.player.pos = scene.maze.start * (128.0, 128.0) + (64.0, 64.0)
     
     scene.player_lives = 3
     let lives_text = newTextGraphic(bigFont)
@@ -89,6 +90,10 @@ proc init*(scene: MainScene) =
             return false
         scene.add door.sensor
         scene.add door
+    let goal = newGoal()
+    goal.pos = scene.maze.goal * (128.0, 128.0) + (64.0, 64.0)
+    goal.parent = scene.camera
+    scene.add goal
     scene.add title
 
     for (e_pos, e_type) in scene.maze.enemies:
@@ -96,11 +101,19 @@ proc init*(scene: MainScene) =
         enemy.pos = e_pos * (128.0, 128.0) + (64.0, 64.0)
         enemy.parent = scene.camera
         scene.add enemy
+    goal.on_collide = proc(): void =
+        let new_scene = new MainScene
+        new_scene.maze_index = scene.maze_index + 1
+        new_scene.init()
+        game.scene = new_scene
     
     
-proc newMainScene*(): MainScene =
+proc newMainScene*(index: int): MainScene =
     new result
+    result.maze_index = index
     init result
+proc newMainScene*(): MainScene =
+    result = newMainScene(0)
 
 method show*(scene: MainScene) =
     echo "Switched to MainScene"

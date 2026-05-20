@@ -7,8 +7,8 @@ import
   ],
   data,
   title,
-  main
-
+  main,
+  levels
 when isMainModule:
   game = newGame()
   if game.init(GameWidth, GameHeight, title = GameTitle, integerScale = true):
