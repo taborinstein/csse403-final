@@ -49,3 +49,6 @@ method update*(player: Player, elapsed: float) =
 method onCollide*(player: Player, target: Entity) =
     
     discard
+
+method handleCollideWithEnemy*(player: Player) = 
+    

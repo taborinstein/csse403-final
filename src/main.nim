@@ -12,7 +12,7 @@ import
   ],
   data,
   player
-import levels, maze_creation, key, door
+import levels, maze_creation, key, door, enemy
 import std/strformat
 
 # type
@@ -24,6 +24,7 @@ type
     maze: MazeSpec
     keys: seq[Key]
     num_keys_has: int
+    player_lives: int
 
 proc init*(scene: MainScene) =
     init Scene(scene)
@@ -43,6 +44,9 @@ proc init*(scene: MainScene) =
     scene.player.layer = 10
     scene.add scene.level
     scene.player.pos = levels.levels[0].start * (128.0, 128.0) + (64.0, 64.0)
+    
+    scene.player_lives = 3
+
     
     let ui = newTextGraphic(bigFont)
     ui.setText " Keys: 0"

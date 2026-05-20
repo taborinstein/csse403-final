@@ -39,5 +39,6 @@ method update*(enemy: Enemy, elapsed: float) =
     
 
 method onCollide*(player: Player, target: Entity) =
-    # collision should be in player? 
-    discard
+    # collision with player  
+    if "player" in target.tags:
+	player.handleCollideWithEnemy()
