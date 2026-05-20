@@ -33,35 +33,42 @@ macro define_maze*(body: untyped): untyped =
             if node.len < 1:
                 w = max(w, x)
                 let pos = (x: x.toFloat, y: y.toFloat)
-                case node.strVal:
-                of "w":
-                    walls.add(pos)
-                of "K":
-                    keys.add(pos)
-                    key_nodes.add node
-                of "D":
-                    doors.add(pos)
-                    door_nodes.add node
-                of "X":
-                    goal = pos
-                of "S":
-                    start = pos
-                of "-":
-                    discard
-                of "1":
-                    enemies.add((pos, 1))
-                of "2":
-                    enemies.add((pos, 2))
-                of "3":
-                    enemies.add((pos, 3))
-                of "4":
-                    enemies.add((pos, 4))
-                of "5":
-                    enemies.add((pos, 5))
-                of "6":
-                    enemies.add((pos, 6))
+                if node.kind == nnkIntLit:
+                    case node.intVal:
+                    of 1:
+                        error("test warning", node)
+                    else:
+                        error(":3")
                 else:
-                    error(&"Invalid token {node.strVal} in maze", node)
+                    case node.strVal:
+                    of "w":
+                        walls.add(pos)
+                    of "K":
+                        keys.add(pos)
+                        key_nodes.add node
+                    of "D":
+                        doors.add(pos)
+                        door_nodes.add node
+                    of "X":
+                        goal = pos
+                    of "S":
+                        start = pos
+                    of "-":
+                        discard
+                    of "1":
+                        enemies.add((pos, 1))
+                    of "2":
+                        enemies.add((pos, 2))
+                    of "3":
+                        enemies.add((pos, 3))
+                    of "4":
+                        enemies.add((pos, 4))
+                    of "5":
+                        enemies.add((pos, 5))
+                    of "6":
+                        enemies.add((pos, 6))
+                    else:
+                        error(&"Invalid token {node.strVal} in maze", node)
                 x += 1
             else:
                 # discard
