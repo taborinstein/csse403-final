@@ -44,8 +44,20 @@ proc init*(scene: MainScene) =
     scene.player.pos = levels.levels[0].start * (128.0, 128.0) + (64.0, 64.0)
     
     scene.player_lives = 3
+    let lives_text = newTextGraphic(bigFont)
+    lives_text.color = toColor(0x888888ffu32)
+    lives_text.setText &" Lives: {scene.player_lives}"
+    let lives_entity = newEntity()
+    lives_entity.layer = 101
+    lives_entity.graphic = lives_text
+    lives_entity.pos = (0, 32)
+    scene.add lives_entity
 
+    player.subtract_lives = proc() = 
+        scene.player_lives -= 1
+	lives_text.setText &" Lives: {scene.player_lives}"
     
+
     let ui = newTextGraphic(bigFont)
     ui.setText " Keys: 0"
     ui.color = toColor(0x888888ffu32)

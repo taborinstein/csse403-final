@@ -13,6 +13,8 @@ const
 type
     Player* = ref object of Entity
         radius: float
+	time_since_damage: float
+	subtract_lives: proc()
 
 proc init*(player: Player) = 
     player.initEntity()
@@ -25,6 +27,7 @@ proc init*(player: Player) =
 #     player.collider.tags.add("player")
     player.physics = platformerPhysics
 #     player.acc.y = 1000
+    player.time_since_damage = 0
 
 proc newPlayer*(): Player =
     new result
@@ -45,9 +48,13 @@ method update*(player: Player, elapsed: float) =
     else:
         player.vel.x = 0
 
+    player.time_since_damage = max(2.5, player.time_since_damage + elapsed)
+
 method onCollide*(player: Player, target: Entity) =
+    if "enemy" in target.tags:
+       player.handleCollideWithEnemy() 
     
-    discard
 
 method handleCollideWithEnemy*(player: Player) = 
-    discard
+    if player.time_since_damage >= 2:
+        player.subtract_lives()
