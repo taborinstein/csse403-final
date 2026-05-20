@@ -6,26 +6,29 @@ import
     types,
     entity,
     nimgame,
+    texturegraphic,
     textgraphic,
     draw
   ],
   data,
   player
-import levels, maze_creation
+import levels, maze_creation, key, door
+import std/strformat
 
 # type
 #     Level = tilemap: ref object of TileMap
 type
-  MainScene* = ref object of Scene
+  MainScene = ref object of Scene
     player: Player
     level: Level
     maze: MazeSpec
+    keys: seq[Key]
+    num_keys_has: int
 
 proc init*(scene: MainScene) =
     init Scene(scene)
-    # scene.level = levels.levels[0]
+    scene.maze = levels.levels[0]
     scene.player = newPlayer()
-    scene.player.pos = (GameWidth / 2, GameHeight / 2)
     scene.add(scene.player)
 
     scene.camera = newEntity()
@@ -42,11 +45,35 @@ proc init*(scene: MainScene) =
     scene.player.pos = levels.levels[0].start * (128.0, 128.0) + (64.0, 64.0)
     
     let ui = newTextGraphic(bigFont)
-    ui.setText "Keys: 0"
-    
+    ui.setText " Keys: 0"
+    ui.color = toColor(0x888888ffu32)
     let title = newEntity()
+    title.layer = 100
     title.graphic = ui
-    discard box((0, 0), (20, 20), ColorBlack)
+    echo scene.maze
+    for key in scene.maze.keys:
+        let k = newKey()
+        k.pos = key * (128.0, 128.0) + (64.0, 64.0)
+        scene.keys.add k
+        k.layer = 9
+        k.on_collect = proc() =
+            scene.num_keys_has += 1
+            ui.setText &" Keys: {scene.num_keys_has}"
+    for key in scene.keys:
+        key.parent = scene.camera
+        scene.add key
+    
+    for d in scene.maze.doors:
+        let door = newDoor() 
+        door.pos = d * (128.0, 128.0) + (64.0, 64.0)
+        door.parent = scene.camera
+        scene.player.collisionEnvironment.add door
+        
+        scene.add door.sensor
+        scene.add door
+        
+
+    
     scene.add title
     
     

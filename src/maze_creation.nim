@@ -69,6 +69,3 @@ macro define_maze*(body: untyped): untyped =
             width: `w`,
             height: `h`
         )
-let v = define_maze:
-    w - w - w 
-echo v

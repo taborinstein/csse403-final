@@ -47,5 +47,5 @@ method update*(player: Player, elapsed: float) =
         player.vel.x = 0
 
 method onCollide*(player: Player, target: Entity) =
-    # do key/door collision
+    
     discard
