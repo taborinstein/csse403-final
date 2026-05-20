@@ -13,8 +13,8 @@ const
 type
     Player* = ref object of Entity
         radius: float
-	time_since_damage: float
-	subtract_lives: proc()
+        time_since_damage: float
+        subtract_lives*: proc()
 
 proc init*(player: Player) = 
     player.initEntity()
@@ -50,11 +50,13 @@ method update*(player: Player, elapsed: float) =
 
     player.time_since_damage = max(2.5, player.time_since_damage + elapsed)
 
-method onCollide*(player: Player, target: Entity) =
-    if "enemy" in target.tags:
-       player.handleCollideWithEnemy() 
-    
-
 method handleCollideWithEnemy*(player: Player) = 
     if player.time_since_damage >= 2:
         player.subtract_lives()
+
+method onCollide*(player: Player, target: Entity) =
+    if "enemy" in target.tags:
+        player.handleCollideWithEnemy() 
+    
+
+

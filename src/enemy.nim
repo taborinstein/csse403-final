@@ -30,9 +30,23 @@ proc init*(enemy: Enemy, speed: float, graphicName: string) =
     enemy.physics = platformerPhysics
 
 # stationary enemy... 
-proc newEnemy1*(): Enemy =
+proc newEnemy1(): Enemy =
     new result
-    init result, 0, "enemy1"
+    init result, 0, "key"
+
+proc newEnemy2(): Enemy = 
+    discard
+
+proc newEnemy*(enemyType: int): Enemy =
+    case enemyType:
+        of 1:
+            return newEnemy1()
+        of 2: 
+            return newEnemy2()
+        else:
+            echo "unrecognized enemy"
+            return newEnemy1()
+
 
 method update*(enemy: Enemy, elapsed: float) = 
     enemy.updateEntity(elapsed)

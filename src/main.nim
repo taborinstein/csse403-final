@@ -53,9 +53,9 @@ proc init*(scene: MainScene) =
     lives_entity.pos = (0, 32)
     scene.add lives_entity
 
-    player.subtract_lives = proc() = 
+    scene.player.subtract_lives = proc() = 
         scene.player_lives -= 1
-	lives_text.setText &" Lives: {scene.player_lives}"
+        lives_text.setText &" Lives: {scene.player_lives}"
     
 
     let ui = newTextGraphic(bigFont)
@@ -90,6 +90,12 @@ proc init*(scene: MainScene) =
         scene.add door.sensor
         scene.add door
     scene.add title
+
+    for (e_pos, e_type) in scene.maze.enemies:
+        let enemy = newEnemy(e_type)
+        enemy.pos = e_pos * (128.0, 128.0) + (64.0, 64.0)
+        enemy.parent = scene.camera
+        scene.add enemy
     
     
 proc newMainScene*(): MainScene =

@@ -7,7 +7,7 @@ type
         walls*: seq[Coord]
         keys*: seq[Coord]
         doors*: seq[Coord]
-	enemies*: seq[(Coord, int)]
+        enemies*: seq[(Coord, int)]
         width*: int
         height*: int
         goal*: Coord
@@ -48,18 +48,18 @@ macro define_maze*(body: untyped): untyped =
                     start = pos
                 of "-":
                     discard
-		of "1":
-		    enemies.add((pos, 1))
-		of "2":
-		    enemies.add((pos, 2))
-		of "3":
-		    enemies.add((pos, 3))
-		of "4":
-		    enemies.add((pos, 4))
-		of "5":
-		    enemies.add((pos, 5))
-		of "6":
-		    enemies.add((pos, 6))
+                of "1":
+                    enemies.add((pos, 1))
+                of "2":
+                    enemies.add((pos, 2))
+                of "3":
+                    enemies.add((pos, 3))
+                of "4":
+                    enemies.add((pos, 4))
+                of "5":
+                    enemies.add((pos, 5))
+                of "6":
+                    enemies.add((pos, 6))
                 else:
                     error(&"Invalid token {node.strVal} in maze", node)
                 x += 1
@@ -86,7 +86,7 @@ macro define_maze*(body: untyped): untyped =
             walls: `walls`, 
             keys: `keys`, 
             doors: `doors`,
-	    enemies: `enemies`,
+            enemies: `enemies`,
             goal: `goal`,
             start: `start`,
             width: `w`,
