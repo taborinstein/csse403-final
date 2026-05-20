@@ -5,12 +5,18 @@ import
     tilemap,
     ]
 import maze_creation
-import level_data/level_1
-import level_data/level_2
+import level_data/[
+    level_1,
+    level_2,
+    level_3,
+    level_4,
+]
 
 let levels* = [
     level_1.level_1,
-    level_2.level_2
+    level_2.level_2,
+    level_3.level_3,
+    level_4.level_4,
 ]
 
 
