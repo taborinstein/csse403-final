@@ -35,18 +35,21 @@ proc newEnemy1(): Enemy =
     init result, 0, "key"
 
 proc newEnemy2(): Enemy = 
-    discard
+    return newEnemy1()
 
 proc newEnemy*(enemyType: int): Enemy =
+    var enemy = new Enemy
     case enemyType:
         of 1:
-            return newEnemy1()
+            echo "test"
+            enemy =  newEnemy1()
+            enemy.updateSelf = proc(enemy: Enemy, elapsed:float) = discard
         of 2: 
             return newEnemy2()
         else:
             echo "unrecognized enemy"
             return newEnemy1()
-
+    return enemy
 
 method update*(enemy: Enemy, elapsed: float) = 
     enemy.updateEntity(elapsed)
@@ -55,5 +58,6 @@ method update*(enemy: Enemy, elapsed: float) =
 
 method onCollide*(enemy: Enemy, target: Entity) =
     # collision with player  
-    if "player" in target.tags:
-        Player(target).handleCollideWithEnemy()
+    #if "player" in target.tags:
+    #    Player(target).handleCollideWithEnemy()
+    discard

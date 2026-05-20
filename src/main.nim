@@ -97,6 +97,7 @@ proc init*(scene: MainScene) =
     scene.add title
 
     for (e_pos, e_type) in scene.maze.enemies:
+        echo "heres an enemy"
         let enemy = newEnemy(e_type)
         enemy.pos = e_pos * (128.0, 128.0) + (64.0, 64.0)
         enemy.parent = scene.camera

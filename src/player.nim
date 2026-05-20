@@ -48,11 +48,12 @@ method update*(player: Player, elapsed: float) =
     else:
         player.vel.x = 0
 
-    player.time_since_damage = max(2.5, player.time_since_damage + elapsed)
+    player.time_since_damage = min(1, player.time_since_damage + elapsed)
 
 method handleCollideWithEnemy*(player: Player) = 
-    if player.time_since_damage >= 2:
+    if player.time_since_damage >= 1:
         player.subtract_lives()
+        player.time_since_damage = 0  
 
 method onCollide*(player: Player, target: Entity) =
     if "enemy" in target.tags:

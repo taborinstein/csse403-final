@@ -36,7 +36,15 @@ macro define_maze*(body: untyped): untyped =
                 if node.kind == nnkIntLit:
                     case node.intVal:
                     of 1:
-                        error("test warning", node)
+                        enemies.add((pos,1))
+                    of 2:
+                        enemies.add((pos,2))
+                    of 3:
+                        enemies.add((pos,3))
+                    of 4:
+                        enemies.add((pos,4))
+                    of 5:
+                        enemies.add((pos,5))
                     else:
                         error(":3")
                 else:
@@ -55,18 +63,6 @@ macro define_maze*(body: untyped): untyped =
                         start = pos
                     of "-":
                         discard
-                    of "1":
-                        enemies.add((pos, 1))
-                    of "2":
-                        enemies.add((pos, 2))
-                    of "3":
-                        enemies.add((pos, 3))
-                    of "4":
-                        enemies.add((pos, 4))
-                    of "5":
-                        enemies.add((pos, 5))
-                    of "6":
-                        enemies.add((pos, 6))
                     else:
                         error(&"Invalid token {node.strVal} in maze", node)
                 x += 1
