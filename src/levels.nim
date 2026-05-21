@@ -51,6 +51,6 @@ proc load*(level: Level, maze: MazeSpec) =
     # for door in maze.doors:
     #     level.map[door.y.toInt][door.x.toInt] = 2
     level.hidden.add @[0]  # tiles on the third row are invisible markers
-    level.passable.add @[0,1] # tiles without colliders
+    level.passable.add @[0] # tiles without colliders
     level.onlyReachableColliders = true # do not init unreachable colliders
     level.initCollider()

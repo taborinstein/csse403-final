@@ -18,21 +18,24 @@ type
         speed: float
         updateSelf*: proc (enemy: Enemy, elapsed: float)
 
-proc init*(enemy: Enemy, speed: float, graphicName: string) = 
+proc init*(enemy: Enemy, speed: float, graphicName: string, radius: int) = 
     enemy.initEntity()
     enemy.speed = speed
     enemy.graphic = gfxData[graphicName]
-    enemy.radius = enemy.graphic.dim.w / 2
-    enemy.centrify()
-    enemy.collider = enemy.newCircleCollider((0.0,0.0), enemy.radius) 
     
     enemy.tags.add("enemy")
     enemy.physics = platformerPhysics
 
 # stationary enemy... 
 proc newEnemy1(): Enemy =
-    new result
-    init result, 0, "key"
+    var enemy = new Enemy
+    init enemy, 0, "enemy1", 32
+    enemy.initSprite((30,30))
+    discard enemy.addAnimation("flash", [0,1], 1/2)
+    enemy.play("flash", -1)
+    enemy.centrify()
+    enemy.collider = enemy.newCircleCollider((0.0,0.0), enemy.radius) 
+    return enemy
 
 proc newEnemy2(): Enemy = 
     return newEnemy1()
@@ -41,7 +44,6 @@ proc newEnemy*(enemyType: int): Enemy =
     var enemy = new Enemy
     case enemyType:
         of 1:
-            echo "test"
             enemy =  newEnemy1()
             enemy.updateSelf = proc(enemy: Enemy, elapsed:float) = discard
         of 2: 
