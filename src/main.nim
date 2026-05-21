@@ -102,6 +102,7 @@ proc init*(scene: MainScene) =
         enemy.pos = e_pos * (128.0, 128.0) + (64.0, 64.0)
         enemy.parent = scene.camera
         scene.add enemy
+
     goal.on_collide = proc(): void =
         let new_scene = new MainScene
         new_scene.maze_index = scene.maze_index + 1
