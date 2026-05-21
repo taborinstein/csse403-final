@@ -1,6 +1,6 @@
 import maze_creation
 
-let level_5* = define_maze:
+let level_6* = define_maze:
     w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
     w w w w w w w w w - - - - - w w w w w w w w w w w w w w w w
     w w w w - w - - - - w w w - - w - w - - - - - - - - - - - w
