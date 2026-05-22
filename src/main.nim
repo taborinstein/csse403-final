@@ -59,8 +59,8 @@ proc init*(scene: MainScene) =
         lives_text.setText &" Lives: {scene.player_lives}"
         if scene.player_lives <= 0:
             let newScene = new MainScene 
-            newScene.init()
             newScene.mazeIndex = scene.mazeIndex
+            newScene.init()
             game.scene = newScene
 
     let ui = newTextGraphic(bigFont)
