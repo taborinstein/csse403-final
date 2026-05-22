@@ -12,6 +12,8 @@ import level_data/[
     level_4,
     level_5,
     level_6,
+    level_7,
+    level_8,
 ]
 
 let levels* = [
@@ -21,6 +23,8 @@ let levels* = [
     level_4.level_4,
     level_5.level_5,
     level_6.level_6,
+    level_7.level_7,
+    level_8.level_8,
 ]
 
 
