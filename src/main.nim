@@ -57,7 +57,11 @@ proc init*(scene: MainScene) =
     scene.player.subtract_lives = proc() = 
         scene.player_lives -= 1
         lives_text.setText &" Lives: {scene.player_lives}"
-    
+        if scene.player_lives <= 0:
+            let newScene = new MainScene 
+            newScene.init()
+            newScene.mazeIndex = scene.mazeIndex
+            game.scene = newScene
 
     let ui = newTextGraphic(bigFont)
     ui.setText " Keys: 0"
