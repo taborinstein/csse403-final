@@ -16,6 +16,7 @@ type
     Enemy* = ref object of Entity
         radius: float
         speed: float
+        time_since_action: float
         updateSelf*: proc (enemy: Enemy, elapsed: float)
 
 proc init*(enemy: Enemy, speed: float, graphicName: string, radius: int) = 
@@ -37,17 +38,29 @@ proc newEnemy1(): Enemy =
     enemy.collider = enemy.newCircleCollider((0.0,0.0), enemy.radius) 
     return enemy
 
+# left right
 proc newEnemy2(): Enemy = 
-    return newEnemy1()
+    var enemy = new Enemy
+    init enemy, 750, "enemy1", 32
+    enemy.initSprite((30,30))
+    enemy.centrify()
+    enemy.collider = enemy.newCircleCollider((0.0,0.0), enemy.radius)
+    enemy.vel.x = -enemy.speed
+    return enemy
 
 proc newEnemy*(enemyType: int): Enemy =
     var enemy = new Enemy
     case enemyType:
         of 1:
-            enemy =  newEnemy1()
+            enemy = newEnemy1()
             enemy.updateSelf = proc(enemy: Enemy, elapsed:float) = discard
         of 2: 
-            return newEnemy2()
+            enemy = newEnemy2()
+            enemy.updateSelf = proc(enemy: Enemy, elapsed:float) = 
+                enemy.time_since_action += elapsed
+                if enemy.time_since_action >= 2:
+                    enemy.time_since_action = 0
+                    enemy.vel.x = -enemy.vel.x
         else:
             echo "unrecognized enemy"
             return newEnemy1()
