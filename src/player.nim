@@ -28,6 +28,9 @@ proc init*(player: Player) =
     player.physics = platformerPhysics
 #     player.acc.y = 1000
     player.time_since_damage = 0
+#    player.blinking = true
+    player.blinkOn = 1/10
+    player.blinkOff = 1/10
 
 proc newPlayer*(): Player =
     new result
@@ -49,11 +52,14 @@ method update*(player: Player, elapsed: float) =
         player.vel.x = 0
 
     player.time_since_damage = min(1, player.time_since_damage + elapsed)
+    if player.time_since_damage == 1:
+        player.blinking = false
 
 method handleCollideWithEnemy*(player: Player) = 
     if player.time_since_damage >= 1:
         player.subtract_lives()
-        player.time_since_damage = 0  
+        player.time_since_damage = 0
+        player.blinking = true
 
 method onCollide*(player: Player, target: Entity) =
     if "enemy" in target.tags:
