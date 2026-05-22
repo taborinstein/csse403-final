@@ -12,7 +12,7 @@ const
   GameTitle* = "Maze Game"
 
 var
-  titleScene*, mainScene*: Scene
+  titleScene*, mainScene*, winScene*: Scene
   defaultFont*, bigFont*: TrueTypeFont
   gfxData*: Assets[TextureGraphic]
 

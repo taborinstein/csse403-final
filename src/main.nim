@@ -109,9 +109,13 @@ proc init*(scene: MainScene) =
 
     goal.on_collide = proc(): void =
         let new_scene = new MainScene
-        new_scene.maze_index = scene.maze_index + 1
-        new_scene.init()
-        game.scene = new_scene
+        let nextMazeIndex = scene.maze_index + 1
+        if nextMazeIndex >= levels.levels.len:
+            game.scene = winScene
+        else:
+            new_scene.maze_index = nextMazeIndex
+            new_scene.init()
+            game.scene = new_scene
     
     
 proc newMainScene*(index: int): MainScene =

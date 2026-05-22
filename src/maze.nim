@@ -8,7 +8,9 @@ import
   data,
   title,
   main,
-  levels
+  levels,
+  win_screen
+
 when isMainModule:
   game = newGame()
   if game.init(GameWidth, GameHeight, title = GameTitle, integerScale = true):
@@ -23,6 +25,7 @@ when isMainModule:
     # Create scenes
     titleScene = newTitleScene()
     mainScene = newMainScene()
+    winScene = newWinScene()
     
     # Run
     game.scene = titleScene # Initial scene
